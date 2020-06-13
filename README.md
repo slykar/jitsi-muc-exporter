@@ -30,6 +30,6 @@ All contributions are welcome, especially those that add **support for missing s
 
 - [ ] Add support for all stats
 - [ ] Improve help texts for stats
-- [ ] Improve exporter configuration; better env var names, less hard-coded strings
+- [ ] Configuration with env vars
 - [ ] Create a Telegraf plugin for Jitsi based on the principals of this project
 - [ ] Create a Grafana dashboard template
