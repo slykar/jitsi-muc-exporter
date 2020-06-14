@@ -11,6 +11,7 @@ import (
 type StatsByName = map[string]JvbStat
 
 type JvbMucCollector struct {
+	namespace string
 	// Keep stats for each JVB - MUC stats get reported for all connected JVBs
 	// TODO: Should we keep a map of stats instead of a list?
 	//  How does this affect GC if we just replace the pointer to JvbStats all the time?
@@ -35,15 +36,17 @@ func ParseArray(s string) ([]uint64, error) {
 	return numbers, json.Unmarshal([]byte(s), &numbers)
 }
 
-func NewJvbMucCollector() *JvbMucCollector {
+func NewJvbMucCollector(namespace string) *JvbMucCollector {
 	return &JvbMucCollector{
+		namespace:  namespace,
 		statsByJvb: make(map[JvbIdentity]*JvbStats),
 	}
 }
 
-func NewPromDescForStat(jvbId JvbIdentity, stat JvbStat, descriptor *StatDescriptor) *prometheus.Desc {
+func NewPromDescForStat(namespace string, jvbId JvbIdentity, stat JvbStat, descriptor *StatDescriptor) *prometheus.Desc {
 	constLabels := prometheus.Labels{"jvb": string(jvbId)}
-	return prometheus.NewDesc(stat.Name, descriptor.Help, []string{}, constLabels)
+	fqName := namespace + "_" + stat.Name
+	return prometheus.NewDesc(fqName, descriptor.Help, []string{}, constLabels)
 }
 
 // This implements Prometheus interface for collectors
@@ -51,7 +54,7 @@ func (c *JvbMucCollector) Describe(ch chan<- *prometheus.Desc) {
 	for jvbId, stats := range c.statsByJvb {
 		for _, stat := range stats.Stats {
 			if descriptor, err := GetStatDescriptor(stat.Name); err == nil {
-				ch <- NewPromDescForStat(jvbId, stat, &descriptor)
+				ch <- NewPromDescForStat(c.namespace, jvbId, stat, &descriptor)
 			}
 		}
 	}
@@ -72,7 +75,7 @@ func (c *JvbMucCollector) Collect(ch chan<- prometheus.Metric) {
 
 			var (
 				metric prometheus.Metric
-				desc   = NewPromDescForStat(jvbId, stat, &descriptor)
+				desc   = NewPromDescForStat(c.namespace, jvbId, stat, &descriptor)
 			)
 
 			switch descriptor.Type {
