@@ -1,3 +1,5 @@
+![Go](https://github.com/slykar/jitsi-muc-exporter/workflows/Go/badge.svg)
+
 # Jitsi MUC Exporter
 
 Prometheus exporter for Jitsi that works by listening on JvbBrewery MUC room.
