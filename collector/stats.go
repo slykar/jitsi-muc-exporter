@@ -34,25 +34,41 @@ var jvbStatsDescriptors = map[string]StatDescriptor{
 	"version": {StatTag, ""},
 	"threads": {StatGauge, ""},
 
-	"p2p_conferences":    {StatGauge, ""},
-	"conferences":        {StatGauge, ""},
-	"participants":       {StatGauge, ""},
-	"videostreams":       {StatGauge, ""},
-	"videochannels":      {StatGauge, ""},
-	"largest_conference": {StatGauge, ""},
+	"p2p_conferences":      {StatGauge, ""},
+	"conferences":          {StatGauge, ""},
+	"participants":         {StatGauge, ""},
+	"videostreams":         {StatGauge, ""},
+	"videochannels":        {StatGauge, ""},
+	"largest_conference":   {StatGauge, ""},
+	"inactive_conferences": {StatGauge, ""},
+	"inactive_endpoints":   {StatGauge, ""},
 
 	"endpoints_sending_video": {StatGauge, ""},
 	"endpoints_sending_audio": {StatGauge, ""},
+	"receive_only_endpoints":  {StatGauge, ""},
 
 	"bit_rate_download": {StatGauge, ""},
 	"bit_rate_upload":   {StatGauge, ""},
+
+	"jitter_aggregate":   {StatGauge, ""},
+	"rtt_aggregate":      {StatGauge, ""},
+	"loss_rate_upload":   {StatGauge, ""},
+	"loss_rate_download": {StatGauge, ""},
 
 	"conference_sizes":             {StatHistogram, "The distribution of conference sizes hosted on the bridge."},
 	"conferences_by_video_senders": {StatHistogram, ""},
 	"conferences_by_audio_senders": {StatHistogram, ""},
 
+	"total_bytes_sent":     {StatCounter, ""},
+	"total_bytes_received": {StatCounter, ""},
+
 	"total_participants":       {StatCounter, ""},
 	"total_conference_seconds": {StatCounter, ""},
+
+	"total_conferences_created":          {StatCounter, ""},
+	"total_failed_conferences":           {StatCounter, ""},
+	"total_partially_failed_conferences": {StatCounter, ""},
+	"total_conferences_completed":        {StatCounter, ""},
 }
 
 // Get a descriptor by JVB stat name.

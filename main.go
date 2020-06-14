@@ -26,7 +26,7 @@ func NewJvbBreweryPresence(room, nickname string) stanza.Presence {
 }
 
 var (
-	jvbCollector = collector.NewJvbMucCollector()
+	jvbCollector = collector.NewJvbMucCollector("jvb")
 )
 
 func init() {
@@ -67,7 +67,7 @@ func main() {
 	// Create client instance - this will not connect yet.
 	// A StreamManager is created below to manage the connection.
 	client, err := xmpp.NewClient(config.GetXMPPConfig(), router, func(err error) {
-		log.Fatalln("Could not create Client instance")
+		log.Fatalf("Could not create Client instance. %s\n", err)
 	})
 
 	if err != nil {
