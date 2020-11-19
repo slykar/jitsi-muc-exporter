@@ -1,4 +1,4 @@
-name: Go
+name: Build and Test and Release
 
 on:
   push:
@@ -31,3 +31,11 @@ jobs:
 
     - name: Test
       run: go test -v .
+
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
+      with:
+        version: latest
+        args: release --rm-dist
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
