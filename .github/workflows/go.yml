@@ -1,15 +1,14 @@
-name: Build and Test and Release
+name: Go
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+      - "*"
 
 jobs:
 
   build:
-    name: Build
+    name: Build and Test and Release
     runs-on: ubuntu-latest
     steps:
 
