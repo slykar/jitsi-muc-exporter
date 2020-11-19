@@ -1,14 +1,11 @@
-name: Go
+name: Go Build and Test
 
-on:
-  push:
-    tags:
-      - "*"
+on: push
 
 jobs:
 
   build:
-    name: Build and Test and Release
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
 
@@ -30,11 +27,3 @@ jobs:
 
     - name: Test
       run: go test -v .
-
-    - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v2
-      with:
-        version: latest
-        args: release --rm-dist
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
